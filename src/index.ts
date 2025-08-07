@@ -7,4 +7,4 @@ export type { ButtonProps } from './components/Button';
 export type { CardProps } from './components/Card';
 
 // Export Preact types
-export type { VNode } from 'preact'; 
+export type { VNode } from 'preact';

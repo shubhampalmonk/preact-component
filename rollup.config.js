@@ -8,6 +8,7 @@ import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import image from '@rollup/plugin-image';
 import PeerDepsExternalPlugin from 'rollup-plugin-peer-deps-external';
+import { dts } from 'rollup-plugin-dts';
 
 const env = process.env.NODE_ENV;
 
@@ -32,17 +33,21 @@ export default [
         extensions: /\.(png|jpg|jpeg|gif|svg)$/,
         limit: 10000,
       }),
-      typescript({ tsconfig: './tsconfig.json', module: 'ESNext' }),
+      typescript({ 
+        tsconfig: './tsconfig.json', 
+        module: 'ESNext',
+        declaration: true,
+        declarationDir: './dist/dts'
+      }),
       commonjs(),
       del({ targets: ['dist/*'] }),
       env === 'production' && terser(),
     ],
     external: Object.keys(pkg.peerDependencies || {}),
   },
-  // {
-  // path to your declaration files root
-  // input: './dist/dts/index.d.ts',
-  // output: [{ file: 'dist/index.d.ts', format: 'es' }],
-  // plugins: [dts()],
-  // },
+  {
+    input: './dist/dts/index.d.ts',
+    output: [{ file: 'dist/index.d.ts', format: 'es' }],
+    plugins: [dts()],
+  },
 ];

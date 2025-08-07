@@ -1,7 +1,7 @@
 import { VNode } from "preact";
 
 export interface CardProps {
-  children: VNode | string;
+  children?: VNode | string;
   title?: string;
   subtitle?: string;
   padding?: 'small' | 'medium' | 'large';
